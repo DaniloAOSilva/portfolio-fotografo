@@ -12,7 +12,7 @@ function App() {
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [imagem, setImagem] = useState(null);
-  const [categoria, setCategoria] = useState("");
+  const [categoriaId, setCategoriaId] = useState("");
   const [editandoId, setEditandoId] = useState(null);
 
   // Buscar fotografias do banco
@@ -145,7 +145,7 @@ function App() {
 
       formulario.append("titulo", titulo);
       formulario.append("descricao", descricao);
-      formulario.append("categoria", categoria);
+      formulario.append("categoria_id", categoriaId);
       formulario.append("imagem", imagem);
 
       const resposta = await fetch("http://localhost:3000/api/fotografias", {
@@ -161,7 +161,7 @@ function App() {
       setTitulo("");
       setDescricao("");
       setImagem(null);
-      setCategoria("");
+      setCategoriaId("");
 
       // Atualiza a galeria
       carregarFotografias();
@@ -176,7 +176,7 @@ function App() {
     setEditandoId(fotografia.id);
     setTitulo(fotografia.titulo);
     setDescricao(fotografia.descricao);
-    setCategoria(fotografia.categoria);
+    setCategoriaId(String(fotografia.categoria_id || ""));
   };
   const salvarEdicao = async () => {
     try {
@@ -184,7 +184,7 @@ function App() {
 
       formulario.append("titulo", titulo);
       formulario.append("descricao", descricao);
-      formulario.append("categoria", categoria);
+      formulario.append("categoria_id", categoriaId);
 
       if (imagem) {
         formulario.append("imagem", imagem);
@@ -205,7 +205,7 @@ function App() {
       setEditandoId(null);
       setTitulo("");
       setDescricao("");
-      setCategoria("");
+      setCategoriaId("");
       setImagem(null);
 
       carregarFotografias();
@@ -500,14 +500,14 @@ function App() {
           <label>Categoria</label>
 
           <select
-            value={categoria}
-            onChange={(evento) => setCategoria(evento.target.value)}
+            value={categoriaId}
+            onChange={(evento) => setCategoriaId(evento.target.value)}
             required
           >
             <option value="">Selecione uma categoria</option>
 
             {categorias.map((item) => (
-              <option key={item.id} value={item.nome}>
+              <option key={item.id} value={item.id}>
                 {item.nome}
               </option>
             ))}
@@ -525,7 +525,7 @@ function App() {
                 setEditandoId(null);
                 setTitulo("");
                 setDescricao("");
-                setCategoria("");
+                setCategoriaId("");
                 setImagem(null);
               }}
             >
