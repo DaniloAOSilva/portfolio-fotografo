@@ -310,7 +310,9 @@ function App() {
               </div>
 
               <div className="foto-info">
-                <span className="categoria">{fotografia.categoria}</span>
+                <span className="categoria">
+                  {fotografia.categoria_nome || fotografia.categoria}
+                </span>
 
                 <h3>{fotografia.titulo}</h3>
 
