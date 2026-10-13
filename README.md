@@ -85,7 +85,9 @@ A segunda entrega amplia o sistema com o gerenciamento de categorias e sua integ
 
 ### Vídeo de apresentação
 
-A adicionar após a gravação e publicação do vídeo da Entrega 2.
+### Vídeo de apresentação
+
+[Apresentação da Entrega 2 — Gerenciamento de Categorias](https://www.youtube.com/watch?v=e8FydD59qys)
 
 ## 🗂️ Estrutura do projeto
 
