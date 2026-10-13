@@ -3,6 +3,9 @@ import "./App.css";
 
 function App() {
   const [fotografias, setFotografias] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [nomeCategoria, setNomeCategoria] = useState("");
+  const [categoriaEditandoId, setCategoriaEditandoId] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
 
@@ -37,10 +40,103 @@ function App() {
       });
   };
 
+  const carregarCategorias = async () => {
+    try {
+      const resposta = await fetch("http://localhost:3000/api/categorias");
+
+      if (!resposta.ok) {
+        throw new Error("Erro ao buscar categorias.");
+      }
+
+      const dados = await resposta.json();
+      setCategorias(dados);
+    } catch (erro) {
+      console.error("Erro ao carregar categorias:", erro);
+      setErro("Não foi possível carregar as categorias.");
+    }
+  };
+
+  const salvarCategoria = async (evento) => {
+    evento.preventDefault();
+
+    const nome = nomeCategoria.trim();
+
+    if (!nome) {
+      setErro("Informe o nome da categoria.");
+      return;
+    }
+
+    try {
+      const url = categoriaEditandoId
+        ? `http://localhost:3000/api/categorias/${categoriaEditandoId}`
+        : "http://localhost:3000/api/categorias";
+
+      const resposta = await fetch(url, {
+        method: categoriaEditandoId ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nome }),
+      });
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(dados.mensagem || "Erro ao salvar categoria.");
+      }
+
+      setNomeCategoria("");
+      setCategoriaEditandoId(null);
+      setErro("");
+
+      await carregarCategorias();
+    } catch (erro) {
+      console.error("Erro ao salvar categoria:", erro);
+      setErro(erro.message || "Não foi possível salvar a categoria.");
+    }
+  };
+
+  const excluirCategoria = async (id) => {
+    const confirmar = window.confirm(
+      "Tem certeza que deseja excluir esta categoria?",
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    try {
+      const resposta = await fetch(
+        `http://localhost:3000/api/categorias/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(dados.mensagem || "Erro ao excluir categoria.");
+      }
+
+      setErro("");
+      await carregarCategorias();
+    } catch (erro) {
+      console.error("Erro ao excluir categoria:", erro);
+      setErro(erro.message || "Não foi possível excluir a categoria.");
+    }
+  };
+
+  const editarCategoria = (categoria) => {
+    setCategoriaEditandoId(categoria.id);
+    setNomeCategoria(categoria.nome);
+    setErro("");
+  };
+
   useEffect(() => {
     carregarFotografias();
+    carregarCategorias();
   }, []);
-
   // Cadastrar fotografia
   const cadastrarFotografia = async (evento) => {
     evento.preventDefault();
@@ -283,6 +379,77 @@ function App() {
       </section>
 
       {/* ÁREA DE CADASTRO */}
+
+      {/* GERENCIAMENTO DE CATEGORIAS */}
+      <section className="cadastro">
+        <div className="titulo-secao">
+          <p>ADMINISTRAÇÃO</p>
+          <h2>Gerenciar categorias</h2>
+          <span>Cadastre, edite e organize as categorias das fotografias.</span>
+        </div>
+
+        <form onSubmit={salvarCategoria}>
+          <label>Nome da categoria</label>
+          <input
+            type="text"
+            value={nomeCategoria}
+            onChange={(evento) => setNomeCategoria(evento.target.value)}
+            placeholder="Ex.: Retratos, Casamentos, Eventos"
+            required
+          />
+
+          <button type="submit" className="botao">
+            {categoriaEditandoId ? "Salvar alterações" : "Cadastrar categoria"}
+          </button>
+
+          {categoriaEditandoId && (
+            <button
+              type="button"
+              className="botao-cancelar"
+              onClick={() => {
+                setCategoriaEditandoId(null);
+                setNomeCategoria("");
+                setErro("");
+              }}
+            >
+              Cancelar edição
+            </button>
+          )}
+        </form>
+
+        <div className="lista-categorias">
+          <h3>Categorias cadastradas</h3>
+
+          {categorias.length === 0 ? (
+            <p>Nenhuma categoria cadastrada.</p>
+          ) : (
+            categorias.map((categoria) => (
+              <div className="categoria-item" key={categoria.id}>
+                <span>{categoria.nome}</span>
+
+                <div>
+                  <button
+                    type="button"
+                    className="botao-editar"
+                    onClick={() => editarCategoria(categoria)}
+                  >
+                    Editar
+                  </button>
+
+                  <button
+                    type="button"
+                    className="botao-excluir"
+                    onClick={() => excluirCategoria(categoria.id)}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+
       <section className="cadastro">
         <div className="titulo-secao">
           <p>ADMINISTRAÇÃO</p>
@@ -331,12 +498,20 @@ function App() {
           )}
 
           <label>Categoria</label>
-          <input
-            type="text"
+
+          <select
             value={categoria}
             onChange={(evento) => setCategoria(evento.target.value)}
             required
-          />
+          >
+            <option value="">Selecione uma categoria</option>
+
+            {categorias.map((item) => (
+              <option key={item.id} value={item.nome}>
+                {item.nome}
+              </option>
+            ))}
+          </select>
 
           <button type="submit" className="botao">
             {editandoId ? "Salvar alterações" : "Cadastrar fotografia"}
