@@ -6,14 +6,13 @@ O projeto foi desenvolvido como atividade acadêmica, utilizando uma arquitetura
 
 ## 🎯 Objetivo
 
-Criar uma aplicação web que permita cadastrar, visualizar, editar e excluir fotografias de um portfólio, além de organizar as imagens por categorias.
+Criar uma aplicação web que permita cadastrar, visualizar, editar e excluir fotografias de um portfólio, além de organizar as imagens por categorias e gerenciar clientes.
 
 O projeto está sendo desenvolvido de forma incremental, com funcionalidades implementadas e apresentadas em entregas.
 
 ## 🛠️ Tecnologias utilizadas
 
 ### Front-end
-
 - React
 - Vite
 - JavaScript
@@ -21,7 +20,6 @@ O projeto está sendo desenvolvido de forma incremental, com funcionalidades imp
 - CSS
 
 ### Back-end
-
 - Node.js
 - Express
 - Multer
@@ -29,11 +27,9 @@ O projeto está sendo desenvolvido de forma incremental, com funcionalidades imp
 - Dotenv
 
 ### Banco de dados
-
 - PostgreSQL
 
 ### Controle de versão
-
 - Git
 - GitHub
 
@@ -44,7 +40,6 @@ O projeto está sendo desenvolvido de forma incremental, com funcionalidades imp
 A primeira entrega apresenta o módulo de gerenciamento de fotografias, com integração entre Front-end, Back-end e banco de dados PostgreSQL.
 
 ### Funcionalidades
-
 - ✅ Cadastro de fotografias
 - ✅ Upload de imagens
 - ✅ Visualização das fotografias
@@ -64,7 +59,6 @@ A primeira entrega apresenta o módulo de gerenciamento de fotografias, com inte
 A segunda entrega amplia o sistema com o gerenciamento de categorias e sua integração com as fotografias.
 
 ### Funcionalidades
-
 - ✅ Cadastro de categorias
 - ✅ Listagem de categorias
 - ✅ Edição de categorias
@@ -76,7 +70,6 @@ A segunda entrega amplia o sistema com o gerenciamento de categorias e sua integ
 - ✅ Utilização do identificador da categoria (`categoria_id`) no relacionamento com as fotografias
 
 ### Testes realizados
-
 - ✅ Cadastro, edição e exclusão de categorias
 - ✅ Validação de categorias duplicadas
 - ✅ Bloqueio da exclusão de categorias vinculadas a fotografias
@@ -85,9 +78,38 @@ A segunda entrega amplia o sistema com o gerenciamento de categorias e sua integ
 
 ### Vídeo de apresentação
 
+[Apresentação da Entrega 2 — Gerenciamento de Categorias](https://www.youtube.com/watch?v=e8FydD59qys)
+
+## 👥 Entrega 3 — Gerenciamento de Clientes
+
+**Status: Concluída e testada ✅**
+
+A terceira entrega implementa o módulo de gerenciamento de clientes, permitindo cadastrar, consultar, editar e excluir clientes, com integração entre Front-end, Back-end e banco de dados PostgreSQL.
+
+### Funcionalidades
+- ✅ Cadastro de clientes
+- ✅ Listagem de clientes cadastrados
+- ✅ Edição dos dados dos clientes
+- ✅ Exclusão de clientes
+- ✅ Validação do campo obrigatório de nome
+- ✅ Validação de e-mail duplicado
+- ✅ Integração com o banco de dados PostgreSQL
+- ✅ Persistência dos dados cadastrados e atualizados
+- ✅ Comunicação entre Front-end e Back-end por meio de API REST
+
+### Testes realizados
+- ✅ Cadastro de clientes
+- ✅ Listagem dos clientes cadastrados
+- ✅ Edição dos dados de clientes
+- ✅ Exclusão de clientes
+- ✅ Verificação do funcionamento das rotas da API
+- ✅ Tratamento de e-mail duplicado
+- ✅ Verificação da persistência dos dados no PostgreSQL
+- ✅ Testes de integração entre Front-end e Back-end
+
 ### Vídeo de apresentação
 
-[Apresentação da Entrega 2 — Gerenciamento de Categorias](https://www.youtube.com/watch?v=e8FydD59qys)
+[Inserir link do vídeo de apresentação da Entrega 3]
 
 ## 🗂️ Estrutura do projeto
 
@@ -136,7 +158,17 @@ Campos principais:
 - `nome`: nome da categoria, com restrição de unicidade
 - `data_criacao`: data de criação do registro
 
-O relacionamento entre as tabelas permite associar fotografias às categorias cadastradas.
+### Tabela de clientes
+
+A tabela `clientes` armazena os dados dos clientes cadastrados no sistema.
+
+Campos principais:
+
+- `id`: identificador do cliente
+- `nome`: nome do cliente
+- `email`: endereço de e-mail, com restrição de unicidade
+- `telefone`: telefone do cliente
+- `data_cadastro`: data de cadastro do cliente
 
 ## ⚙️ Como executar o projeto
 
@@ -153,7 +185,7 @@ O relacionamento entre as tabelas permite associar fotografias às categorias ca
 
 Crie o banco de dados `portfolio_fotografo` no PostgreSQL e configure as credenciais de acesso utilizadas pelo Back-end.
 
-As tabelas e o relacionamento entre fotografias e categorias devem estar configurados conforme a estrutura utilizada no projeto.
+As tabelas e os relacionamentos devem estar configurados conforme a estrutura utilizada no projeto.
 
 ### 3. Configuração do Back-end
 
@@ -211,22 +243,32 @@ A aplicação utiliza uma API REST para comunicação entre o Front-end e o Back
 
 ### Fotografias
 
-| Método | Endpoint               | Operação                    |
-| ------ | ---------------------- | --------------------------- |
-| GET    | `/api/fotografias`     | Lista fotografias           |
-| GET    | `/api/fotografias/:id` | Busca uma fotografia por ID |
-| POST   | `/api/fotografias`     | Cadastra uma fotografia     |
-| PUT    | `/api/fotografias/:id` | Atualiza uma fotografia     |
-| DELETE | `/api/fotografias/:id` | Exclui uma fotografia       |
+| Método | Endpoint | Operação |
+|---|---|---|
+| GET | `/api/fotografias` | Lista fotografias |
+| GET | `/api/fotografias/:id` | Busca uma fotografia por ID |
+| POST | `/api/fotografias` | Cadastra uma fotografia |
+| PUT | `/api/fotografias/:id` | Atualiza uma fotografia |
+| DELETE | `/api/fotografias/:id` | Exclui uma fotografia |
 
 ### Categorias
 
-| Método | Endpoint              | Operação                                                           |
-| ------ | --------------------- | ------------------------------------------------------------------ |
-| GET    | `/api/categorias`     | Lista categorias                                                   |
-| POST   | `/api/categorias`     | Cadastra uma categoria                                             |
-| PUT    | `/api/categorias/:id` | Atualiza uma categoria                                             |
+| Método | Endpoint | Operação |
+|---|---|---|
+| GET | `/api/categorias` | Lista categorias |
+| POST | `/api/categorias` | Cadastra uma categoria |
+| PUT | `/api/categorias/:id` | Atualiza uma categoria |
 | DELETE | `/api/categorias/:id` | Exclui uma categoria, desde que não esteja vinculada a fotografias |
+
+### Clientes
+
+| Método | Endpoint | Operação |
+|---|---|---|
+| GET | `/api/clientes` | Lista clientes |
+| GET | `/api/clientes/:id` | Busca um cliente por ID |
+| POST | `/api/clientes` | Cadastra um cliente |
+| PUT | `/api/clientes/:id` | Atualiza os dados de um cliente |
+| DELETE | `/api/clientes/:id` | Exclui um cliente |
 
 ## 👥 Participantes
 
@@ -260,14 +302,14 @@ CRUD de fotografias desenvolvido, testado e integrado ao PostgreSQL.
 
 Gerenciamento de categorias integrado ao PostgreSQL, com associação entre categorias e fotografias.
 
-### Entrega 3 — CRUD de Clientes
+### Entrega 3 — Gerenciamento de Clientes
 
-**Planejada ⏳**
+**Concluída e testada ✅**
 
-Próxima funcionalidade prevista: gerenciamento de clientes.
+Gerenciamento de clientes implementado, com cadastro, listagem, edição e exclusão integrados ao PostgreSQL.
 
 ### Entrega 4 — Agendamentos
 
 **Planejada ⏳**
 
-Funcionalidade prevista para uma etapa posterior do projeto.
+Próxima funcionalidade prevista: gerenciamento de agendamentos.
