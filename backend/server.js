@@ -408,6 +408,181 @@ app.delete("/api/categorias/:id", async (req, res) => {
   }
 });
 
+
+// ==========================================
+// ROTAS DA ENTREGA 3 — CLIENTES
+// ==========================================
+
+// Listar todos os clientes
+app.get("/api/clientes", async (req, res) => {
+  try {
+    const resultado = await pool.query(
+      "SELECT * FROM clientes ORDER BY nome ASC"
+    );
+
+    res.json(resultado.rows);
+  } catch (erro) {
+    console.error("Erro ao listar clientes:", erro);
+    res.status(500).json({
+      mensagem: "Erro ao listar clientes."
+    });
+  }
+});
+
+// Buscar um cliente pelo ID
+app.get("/api/clientes/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const resultado = await pool.query(
+      "SELECT * FROM clientes WHERE id = $1",
+      [id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({
+        mensagem: "Cliente não encontrado."
+      });
+    }
+
+    res.json(resultado.rows[0]);
+  } catch (erro) {
+    console.error("Erro ao buscar cliente:", erro);
+    res.status(500).json({
+      mensagem: "Erro ao buscar cliente."
+    });
+  }
+});
+
+
+// Cadastrar um novo cliente
+app.post("/api/clientes", async (req, res) => {
+  try {
+    const { nome, email, telefone } = req.body;
+
+    if (!nome || !nome.trim()) {
+      return res.status(400).json({
+        mensagem: "O nome do cliente é obrigatório."
+      });
+    }
+
+    const resultado = await pool.query(
+      `INSERT INTO clientes (nome, email, telefone)
+       VALUES ($1, $2, $3)
+       RETURNING *`,
+      [
+        nome.trim(),
+        email ? email.trim() : null,
+        telefone ? telefone.trim() : null
+      ]
+    );
+
+    res.status(201).json({
+      mensagem: "Cliente cadastrado com sucesso!",
+      cliente: resultado.rows[0]
+    });
+
+  } catch (erro) {
+    if (erro.code === "23505") {
+      return res.status(409).json({
+        mensagem: "Este e-mail já está cadastrado."
+      });
+    }
+
+    console.error("Erro ao cadastrar cliente:", erro);
+
+    res.status(500).json({
+      mensagem: "Erro ao cadastrar cliente."
+    });
+  }
+});
+
+
+// Editar um cliente
+app.put("/api/clientes/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nome, email, telefone } = req.body;
+
+    if (!nome || !nome.trim()) {
+      return res.status(400).json({
+        mensagem: "O nome do cliente é obrigatório."
+      });
+    }
+
+    const resultado = await pool.query(
+      `UPDATE clientes
+       SET nome = $1,
+           email = $2,
+           telefone = $3
+       WHERE id = $4
+       RETURNING *`,
+      [
+        nome.trim(),
+        email ? email.trim() : null,
+        telefone ? telefone.trim() : null,
+        id
+      ]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({
+        mensagem: "Cliente não encontrado."
+      });
+    }
+
+    res.json({
+      mensagem: "Cliente atualizado com sucesso!",
+      cliente: resultado.rows[0]
+    });
+
+  } catch (erro) {
+    if (erro.code === "23505") {
+      return res.status(409).json({
+        mensagem: "Este e-mail já está cadastrado."
+      });
+    }
+
+    console.error("Erro ao atualizar cliente:", erro);
+
+    res.status(500).json({
+      mensagem: "Erro ao atualizar cliente."
+    });
+  }
+});
+
+
+// Excluir um cliente
+app.delete("/api/clientes/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const resultado = await pool.query(
+      "DELETE FROM clientes WHERE id = $1 RETURNING *",
+      [id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({
+        mensagem: "Cliente não encontrado."
+      });
+    }
+
+    res.json({
+      mensagem: "Cliente excluído com sucesso!",
+      cliente: resultado.rows[0]
+    });
+
+  } catch (erro) {
+    console.error("Erro ao excluir cliente:", erro);
+
+    res.status(500).json({
+      mensagem: "Erro ao excluir cliente."
+    });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

@@ -4,6 +4,13 @@ import "./App.css";
 function App() {
   const [fotografias, setFotografias] = useState([]);
   const [categorias, setCategorias] = useState([]);
+  const [clientes, setClientes] = useState([]);
+
+  const [nomeCliente, setNomeCliente] = useState("");
+  const [emailCliente, setEmailCliente] = useState("");
+  const [telefoneCliente, setTelefoneCliente] = useState("");
+  const [clienteEditandoId, setClienteEditandoId] = useState(null);
+
   const [nomeCategoria, setNomeCategoria] = useState("");
   const [categoriaEditandoId, setCategoriaEditandoId] = useState(null);
   const [carregando, setCarregando] = useState(true);
@@ -40,6 +47,7 @@ function App() {
       });
   };
 
+  // Buscar categorias
   const carregarCategorias = async () => {
     try {
       const resposta = await fetch("http://localhost:3000/api/categorias");
@@ -56,6 +64,112 @@ function App() {
     }
   };
 
+  // Buscar clientes
+  const carregarClientes = async () => {
+    try {
+      const resposta = await fetch("http://localhost:3000/api/clientes");
+
+      if (!resposta.ok) {
+        throw new Error("Erro ao buscar clientes.");
+      }
+
+      const dados = await resposta.json();
+      setClientes(dados);
+    } catch (erro) {
+      console.error("Erro ao carregar clientes:", erro);
+      setErro("Não foi possível carregar os clientes.");
+    }
+  };
+
+  // Cadastrar ou atualizar cliente
+  const salvarCliente = async (evento) => {
+    evento.preventDefault();
+
+    const nome = nomeCliente.trim();
+
+    if (!nome) {
+      setErro("Informe o nome do cliente.");
+      return;
+    }
+
+    try {
+      const url = clienteEditandoId
+        ? `http://localhost:3000/api/clientes/${clienteEditandoId}`
+        : "http://localhost:3000/api/clientes";
+
+      const resposta = await fetch(url, {
+        method: clienteEditandoId ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome,
+          email: emailCliente,
+          telefone: telefoneCliente,
+        }),
+      });
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(dados.mensagem || "Erro ao salvar cliente.");
+      }
+
+      setNomeCliente("");
+      setEmailCliente("");
+      setTelefoneCliente("");
+      setClienteEditandoId(null);
+      setErro("");
+
+      await carregarClientes();
+    } catch (erro) {
+      console.error("Erro ao salvar cliente:", erro);
+      setErro(erro.message || "Não foi possível salvar o cliente.");
+    }
+  };
+
+  // Preparar cliente para edição
+  const editarCliente = (cliente) => {
+    setClienteEditandoId(cliente.id);
+    setNomeCliente(cliente.nome);
+    setEmailCliente(cliente.email || "");
+    setTelefoneCliente(cliente.telefone || "");
+    setErro("");
+  };
+
+  // Excluir cliente
+  const excluirCliente = async (id) => {
+    const confirmar = window.confirm(
+      "Tem certeza que deseja excluir este cliente?"
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    try {
+      const resposta = await fetch(
+        `http://localhost:3000/api/clientes/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(dados.mensagem || "Erro ao excluir cliente.");
+      }
+
+      setErro("");
+      await carregarClientes();
+    } catch (erro) {
+      console.error("Erro ao excluir cliente:", erro);
+      setErro(erro.message || "Não foi possível excluir o cliente.");
+    }
+  };
+
+  // Cadastrar ou atualizar categoria
   const salvarCategoria = async (evento) => {
     evento.preventDefault();
 
@@ -96,9 +210,10 @@ function App() {
     }
   };
 
+  // Excluir categoria
   const excluirCategoria = async (id) => {
     const confirmar = window.confirm(
-      "Tem certeza que deseja excluir esta categoria?",
+      "Tem certeza que deseja excluir esta categoria?"
     );
 
     if (!confirmar) {
@@ -110,7 +225,7 @@ function App() {
         `http://localhost:3000/api/categorias/${id}`,
         {
           method: "DELETE",
-        },
+        }
       );
 
       const dados = await resposta.json();
@@ -127,19 +242,24 @@ function App() {
     }
   };
 
+  // Preparar categoria para edição
   const editarCategoria = (categoria) => {
     setCategoriaEditandoId(categoria.id);
     setNomeCategoria(categoria.nome);
     setErro("");
   };
 
+  // Carregar dados ao abrir a aplicação
   useEffect(() => {
     carregarFotografias();
     carregarCategorias();
+    carregarClientes();
   }, []);
+
   // Cadastrar fotografia
   const cadastrarFotografia = async (evento) => {
     evento.preventDefault();
+
     try {
       const formulario = new FormData();
 
@@ -157,13 +277,11 @@ function App() {
         throw new Error("Erro ao cadastrar fotografia.");
       }
 
-      // Limpa o formulário
       setTitulo("");
       setDescricao("");
       setImagem(null);
       setCategoriaId("");
 
-      // Atualiza a galeria
       carregarFotografias();
     } catch (erro) {
       console.error(erro);
@@ -171,13 +289,15 @@ function App() {
     }
   };
 
-  // Excluir fotografia
+  // Preparar fotografia para edição
   const editarFotografia = (fotografia) => {
     setEditandoId(fotografia.id);
     setTitulo(fotografia.titulo);
     setDescricao(fotografia.descricao);
     setCategoriaId(String(fotografia.categoria_id || ""));
   };
+
+  // Salvar edição da fotografia
   const salvarEdicao = async () => {
     try {
       const formulario = new FormData();
@@ -195,7 +315,7 @@ function App() {
         {
           method: "PUT",
           body: formulario,
-        },
+        }
       );
 
       if (!resposta.ok) {
@@ -214,9 +334,11 @@ function App() {
       setErro("Não foi possível atualizar a fotografia.");
     }
   };
+
+  // Excluir fotografia
   const excluirFotografia = async (id) => {
     const confirmar = window.confirm(
-      "Tem certeza que deseja excluir esta fotografia?",
+      "Tem certeza que deseja excluir esta fotografia?"
     );
 
     if (!confirmar) {
@@ -228,7 +350,7 @@ function App() {
         `http://localhost:3000/api/fotografias/${id}`,
         {
           method: "DELETE",
-        },
+        }
       );
 
       if (!resposta.ok) {
@@ -244,7 +366,7 @@ function App() {
 
   return (
     <main>
-      {/* CABEÇALHO */}
+          {/* CABEÇALHO */}
       <header className="cabecalho">
         <div className="logo">
           <span>PHOTO</span>
@@ -380,9 +502,98 @@ function App() {
         </a>
       </section>
 
-      {/* ÁREA DE CADASTRO */}
+      {/* GERENCIAMENTO DE CLIENTES */}
+      <section className="cadastro" id="clientes">
+        <div className="titulo-secao">
+          <p>ADMINISTRAÇÃO</p>
+          <h2>Gerenciar clientes</h2>
+          <span>Cadastre, consulte, edite e organize seus clientes.</span>
+        </div>
 
-      {/* GERENCIAMENTO DE CATEGORIAS */}
+        <form onSubmit={salvarCliente}>
+          <label>Nome do cliente</label>
+          <input
+            type="text"
+            value={nomeCliente}
+            onChange={(evento) => setNomeCliente(evento.target.value)}
+            placeholder="Nome completo"
+            required
+          />
+
+          <label>E-mail</label>
+          <input
+            type="email"
+            value={emailCliente}
+            onChange={(evento) => setEmailCliente(evento.target.value)}
+            placeholder="exemplo@email.com"
+          />
+
+          <label>Telefone</label>
+          <input
+            type="tel"
+            value={telefoneCliente}
+            onChange={(evento) => setTelefoneCliente(evento.target.value)}
+            placeholder="(11) 99999-9999"
+          />
+
+          <button type="submit" className="botao">
+            {clienteEditandoId ? "Salvar alterações" : "Cadastrar cliente"}
+          </button>
+
+          {clienteEditandoId && (
+            <button
+              type="button"
+              className="botao-cancelar"
+              onClick={() => {
+                setClienteEditandoId(null);
+                setNomeCliente("");
+                setEmailCliente("");
+                setTelefoneCliente("");
+                setErro("");
+              }}
+            >
+              Cancelar edição
+            </button>
+          )}
+        </form>
+
+        <div className="lista-categorias">
+          <h3>Clientes cadastrados</h3>
+
+          {clientes.length === 0 ? (
+            <p>Nenhum cliente cadastrado.</p>
+          ) : (
+            clientes.map((cliente) => (
+              <div className="categoria-item" key={cliente.id}>
+                <div>
+                  <strong>{cliente.nome}</strong>
+                  <p>{cliente.email || "Sem e-mail"}</p>
+                  <p>{cliente.telefone || "Sem telefone"}</p>
+                </div>
+
+                <div>
+                  <button
+                    type="button"
+                    className="botao-editar"
+                    onClick={() => editarCliente(cliente)}
+                  >
+                    Editar
+                  </button>
+
+                  <button
+                    type="button"
+                    className="botao-excluir"
+                    onClick={() => excluirCliente(cliente.id)}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+            {/* GERENCIAMENTO DE CATEGORIAS */}
       <section className="cadastro">
         <div className="titulo-secao">
           <p>ADMINISTRAÇÃO</p>
@@ -452,6 +663,7 @@ function App() {
         </div>
       </section>
 
+      {/* CADASTRAR FOTOGRAFIA */}
       <section className="cadastro">
         <div className="titulo-secao">
           <p>ADMINISTRAÇÃO</p>
@@ -492,6 +704,7 @@ function App() {
             onChange={(evento) => setImagem(evento.target.files[0])}
             required={!editandoId}
           />
+
           {imagem && (
             <div className="preview-imagem">
               <p>Pré-visualização:</p>
