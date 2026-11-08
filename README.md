@@ -109,7 +109,7 @@ A terceira entrega implementa o módulo de gerenciamento de clientes, permitindo
 
 ### Vídeo de apresentação
 
-[Inserir link do vídeo de apresentação da Entrega 3]
+https://www.youtube.com/watch?v=1HpJ71f_PYE
 
 ## 🗂️ Estrutura do projeto
 
