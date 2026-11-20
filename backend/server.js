@@ -582,6 +582,222 @@ app.delete("/api/clientes/:id", async (req, res) => {
   }
 });
 
+// ==========================================
+// ROTAS DA ENTREGA 4 — AGENDAMENTOS
+// ==========================================
+
+// Listar todos os agendamentos
+app.get("/api/agendamentos", async (req, res) => {
+  try {
+    const resultado = await pool.query(`
+      SELECT
+        agendamentos.*,
+        clientes.nome AS cliente_nome
+      FROM agendamentos
+      INNER JOIN clientes
+        ON agendamentos.cliente_id = clientes.id
+      ORDER BY agendamentos.data_agendamento ASC,
+               agendamentos.horario ASC
+    `);
+
+    res.json(resultado.rows);
+  } catch (erro) {
+    console.error("Erro ao listar agendamentos:", erro);
+    res.status(500).json({
+      mensagem: "Erro ao listar agendamentos."
+    });
+  }
+});
+
+// Buscar um agendamento pelo ID
+app.get("/api/agendamentos/:id", async (req, res) => {
+  try {
+    const resultado = await pool.query(
+      `SELECT agendamentos.*, clientes.nome AS cliente_nome
+       FROM agendamentos
+       INNER JOIN clientes ON agendamentos.cliente_id = clientes.id
+       WHERE agendamentos.id = $1`,
+      [req.params.id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({
+        mensagem: "Agendamento não encontrado."
+      });
+    }
+
+    res.json(resultado.rows[0]);
+  } catch (erro) {
+    console.error("Erro ao buscar agendamento:", erro);
+    res.status(500).json({
+      mensagem: "Erro ao buscar agendamento."
+    });
+  }
+});
+
+// Cadastrar um agendamento
+app.post("/api/agendamentos", async (req, res) => {
+  try {
+    const {
+      cliente_id,
+      tipo_servico,
+      data_agendamento,
+      horario,
+      local,
+      observacoes,
+      status
+    } = req.body;
+
+    if (!cliente_id || !tipo_servico?.trim() ||
+        !data_agendamento || !horario) {
+      return res.status(400).json({
+        mensagem: "Preencha cliente, serviço, data e horário."
+      });
+    }
+
+    const resultado = await pool.query(
+      `INSERT INTO agendamentos
+       (cliente_id, tipo_servico, data_agendamento,
+        horario, local, observacoes, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING *`,
+      [
+        cliente_id,
+        tipo_servico.trim(),
+        data_agendamento,
+        horario,
+        local || null,
+        observacoes || null,
+        status || "Pendente"
+      ]
+    );
+
+    res.status(201).json({
+      mensagem: "Agendamento cadastrado com sucesso!",
+      agendamento: resultado.rows[0]
+    });
+
+  } catch (erro) {
+    if (erro.code === "23503") {
+      return res.status(400).json({
+        mensagem: "Cliente não encontrado."
+      });
+    }
+
+    if (erro.code === "23514") {
+      return res.status(400).json({
+        mensagem: "Status de agendamento inválido."
+      });
+    }
+
+    console.error("Erro ao cadastrar agendamento:", erro);
+    res.status(500).json({
+      mensagem: "Erro ao cadastrar agendamento."
+    });
+  }
+});
+
+// Editar um agendamento
+app.put("/api/agendamentos/:id", async (req, res) => {
+  try {
+    const {
+      cliente_id,
+      tipo_servico,
+      data_agendamento,
+      horario,
+      local,
+      observacoes,
+      status
+    } = req.body;
+
+    if (!cliente_id || !tipo_servico?.trim() ||
+        !data_agendamento || !horario) {
+      return res.status(400).json({
+        mensagem: "Preencha cliente, serviço, data e horário."
+      });
+    }
+
+    const resultado = await pool.query(
+      `UPDATE agendamentos
+       SET cliente_id = $1,
+           tipo_servico = $2,
+           data_agendamento = $3,
+           horario = $4,
+           local = $5,
+           observacoes = $6,
+           status = $7
+       WHERE id = $8
+       RETURNING *`,
+      [
+        cliente_id,
+        tipo_servico.trim(),
+        data_agendamento,
+        horario,
+        local || null,
+        observacoes || null,
+        status,
+        req.params.id
+      ]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({
+        mensagem: "Agendamento não encontrado."
+      });
+    }
+
+    res.json({
+      mensagem: "Agendamento atualizado com sucesso!",
+      agendamento: resultado.rows[0]
+    });
+
+  } catch (erro) {
+    if (erro.code === "23503") {
+      return res.status(400).json({
+        mensagem: "Cliente não encontrado."
+      });
+    }
+    console.error("DETALHES DO ERRO:", erro);
+
+    if (erro.code === "23514") {
+      return res.status(400).json({
+        mensagem: "Status de agendamento inválido."
+      });
+    }
+
+    console.error("Erro ao atualizar agendamento:", erro);
+    res.status(500).json({
+      mensagem: "Erro ao atualizar agendamento."
+    });
+  }
+});
+
+// Excluir um agendamento
+app.delete("/api/agendamentos/:id", async (req, res) => {
+  try {
+    const resultado = await pool.query(
+      "DELETE FROM agendamentos WHERE id = $1 RETURNING *",
+      [req.params.id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({
+        mensagem: "Agendamento não encontrado."
+      });
+    }
+
+    res.json({
+      mensagem: "Agendamento excluído com sucesso!",
+      agendamento: resultado.rows[0]
+    });
+
+  } catch (erro) {
+    console.error("Erro ao excluir agendamento:", erro);
+    res.status(500).json({
+      mensagem: "Erro ao excluir agendamento."
+    });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

@@ -5,6 +5,16 @@ function App() {
   const [fotografias, setFotografias] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [clientes, setClientes] = useState([]);
+  const [agendamentos, setAgendamentos] = useState([]);
+
+  const [clienteAgendamento, setClienteAgendamento] = useState("");
+  const [tipoServico, setTipoServico] = useState("");
+  const [dataAgendamento, setDataAgendamento] = useState("");
+  const [horarioAgendamento, setHorarioAgendamento] = useState("");
+  const [localAgendamento, setLocalAgendamento] = useState("");
+  const [observacoesAgendamento, setObservacoesAgendamento] = useState("");
+  const [statusAgendamento, setStatusAgendamento] = useState("Pendente");
+  const [agendamentoEditandoId, setAgendamentoEditandoId] = useState(null);
 
   const [nomeCliente, setNomeCliente] = useState("");
   const [emailCliente, setEmailCliente] = useState("");
@@ -78,6 +88,110 @@ function App() {
     } catch (erro) {
       console.error("Erro ao carregar clientes:", erro);
       setErro("Não foi possível carregar os clientes.");
+    }
+  };
+
+  // Buscar agendamentos
+  const carregarAgendamentos = async () => {
+    try {
+      const resposta = await fetch("http://localhost:3000/api/agendamentos");
+      if (!resposta.ok) {
+        throw new Error("Erro ao buscar agendamentos.");
+      }
+      const dados = await resposta.json();
+      setAgendamentos(dados);
+    } catch (erro) {
+      console.error("Erro ao carregar agendamentos:", erro);
+      setErro("Não foi possível carregar os agendamentos.");
+    }
+  };
+
+  // Limpar formulário de agendamento
+  const limparFormularioAgendamento = () => {
+    setClienteAgendamento("");
+    setTipoServico("");
+    setDataAgendamento("");
+    setHorarioAgendamento("");
+    setLocalAgendamento("");
+    setObservacoesAgendamento("");
+    setStatusAgendamento("Pendente");
+    setAgendamentoEditandoId(null);
+  };
+
+  // Cadastrar ou atualizar agendamento
+  const salvarAgendamento = async (evento) => {
+    evento.preventDefault();
+
+    if (!clienteAgendamento || !tipoServico.trim() || !dataAgendamento || !horarioAgendamento) {
+      setErro("Preencha cliente, serviço, data e horário do agendamento.");
+      return;
+    }
+
+    try {
+      const url = agendamentoEditandoId
+        ? `http://localhost:3000/api/agendamentos/${agendamentoEditandoId}`
+        : "http://localhost:3000/api/agendamentos";
+
+      const resposta = await fetch(url, {
+        method: agendamentoEditandoId ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cliente_id: Number(clienteAgendamento),
+          tipo_servico: tipoServico.trim(),
+          data_agendamento: dataAgendamento,
+          horario: horarioAgendamento,
+          local: localAgendamento,
+          observacoes: observacoesAgendamento,
+          status: statusAgendamento,
+        }),
+      });
+
+      const dados = await resposta.json();
+      if (!resposta.ok) {
+        throw new Error(dados.mensagem || "Erro ao salvar agendamento.");
+      }
+
+      limparFormularioAgendamento();
+      setErro("");
+      await carregarAgendamentos();
+    } catch (erro) {
+      console.error("Erro ao salvar agendamento:", erro);
+      setErro(erro.message || "Não foi possível salvar o agendamento.");
+    }
+  };
+
+  // Preparar agendamento para edição
+  const editarAgendamento = (agendamento) => {
+    setAgendamentoEditandoId(agendamento.id);
+    setClienteAgendamento(String(agendamento.cliente_id));
+    setTipoServico(agendamento.tipo_servico || "");
+    setDataAgendamento(String(agendamento.data_agendamento || "").slice(0, 10));
+    setHorarioAgendamento(String(agendamento.horario || "").slice(0, 5));
+    setLocalAgendamento(agendamento.local || "");
+    setObservacoesAgendamento(agendamento.observacoes || "");
+    setStatusAgendamento(agendamento.status || "Pendente");
+    setErro("");
+  };
+
+  // Excluir agendamento
+  const excluirAgendamento = async (id) => {
+    const confirmar = window.confirm("Tem certeza que deseja excluir este agendamento?");
+    if (!confirmar) return;
+
+    try {
+      const resposta = await fetch(`http://localhost:3000/api/agendamentos/${id}`, {
+        method: "DELETE",
+      });
+      const dados = await resposta.json();
+      if (!resposta.ok) {
+        throw new Error(dados.mensagem || "Erro ao excluir agendamento.");
+      }
+      setErro("");
+      if (agendamentoEditandoId === id) limparFormularioAgendamento();
+      await carregarAgendamentos();
+    } catch (erro) {
+      console.error("Erro ao excluir agendamento:", erro);
+      setErro(erro.message || "Não foi possível excluir o agendamento.");
     }
   };
 
@@ -254,6 +368,7 @@ function App() {
     carregarFotografias();
     carregarCategorias();
     carregarClientes();
+    carregarAgendamentos();
   }, []);
 
   // Cadastrar fotografia
@@ -500,6 +615,130 @@ function App() {
         >
           Falar pelo WhatsApp
         </a>
+      </section>
+
+      {/* GERENCIAMENTO DE AGENDAMENTOS */}
+      <section className="cadastro" id="agendamentos">
+        <div className="titulo-secao">
+          <p>ADMINISTRAÇÃO</p>
+          <h2>Gerenciar agendamentos</h2>
+          <span>Organize os compromissos e acompanhe o status de cada serviço.</span>
+        </div>
+
+        {clientes.length === 0 && (
+          <p className="mensagem erro">Cadastre pelo menos um cliente antes de criar um agendamento.</p>
+        )}
+
+        <form onSubmit={salvarAgendamento}>
+          <label>Cliente</label>
+          <select
+            value={clienteAgendamento}
+            onChange={(evento) => setClienteAgendamento(evento.target.value)}
+            required
+          >
+            <option value="">Selecione um cliente</option>
+            {clientes.map((cliente) => (
+              <option key={cliente.id} value={cliente.id}>{cliente.nome}</option>
+            ))}
+          </select>
+
+          <label>Tipo de serviço</label>
+          <input
+            type="text"
+            value={tipoServico}
+            onChange={(evento) => setTipoServico(evento.target.value)}
+            placeholder="Ex.: Ensaio fotográfico, casamento, evento"
+            required
+          />
+
+          <label>Data</label>
+          <input
+            type="date"
+            value={dataAgendamento}
+            onChange={(evento) => setDataAgendamento(evento.target.value)}
+            required
+          />
+
+          <label>Horário</label>
+          <input
+            type="time"
+            value={horarioAgendamento}
+            onChange={(evento) => setHorarioAgendamento(evento.target.value)}
+            required
+          />
+
+          <label>Local</label>
+          <input
+            type="text"
+            value={localAgendamento}
+            onChange={(evento) => setLocalAgendamento(evento.target.value)}
+            placeholder="Endereço ou local do serviço"
+          />
+
+          <label>Observações</label>
+          <textarea
+            value={observacoesAgendamento}
+            onChange={(evento) => setObservacoesAgendamento(evento.target.value)}
+            placeholder="Informações adicionais sobre o agendamento"
+          />
+
+          <label>Status</label>
+          <select
+            value={statusAgendamento}
+            onChange={(evento) => setStatusAgendamento(evento.target.value)}
+            required
+          >
+            <option value="Pendente">Pendente</option>
+            <option value="Confirmado">Confirmado</option>
+            <option value="Concluido">Concluído</option>
+          </select>
+
+          <button type="submit" className="botao" disabled={clientes.length === 0}>
+            {agendamentoEditandoId ? "Salvar alterações" : "Cadastrar agendamento"}
+          </button>
+
+          {agendamentoEditandoId && (
+            <button type="button" className="botao-cancelar" onClick={limparFormularioAgendamento}>
+              Cancelar edição
+            </button>
+          )}
+        </form>
+
+        <div className="lista-categorias">
+          <h3>Agendamentos cadastrados</h3>
+          {agendamentos.length === 0 ? (
+            <p>Nenhum agendamento cadastrado.</p>
+          ) : (
+            agendamentos.map((agendamento) => (
+              <div className="categoria-item" key={agendamento.id}>
+                <div>
+                  <strong>{agendamento.tipo_servico}</strong>
+                  <p>Cliente: {agendamento.cliente_nome || `ID ${agendamento.cliente_id}`}</p>
+                  <p>Data: {String(agendamento.data_agendamento || "").slice(0, 10).split("-").reverse().join("/")} às {String(agendamento.horario || "").slice(0, 5)}</p>
+                  {agendamento.local && <p>Local: {agendamento.local}</p>}
+                  {agendamento.observacoes && <p>Observações: {agendamento.observacoes}</p>}
+                  <p><strong>Status: {agendamento.status}</strong></p>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="botao-editar"
+                    onClick={() => editarAgendamento(agendamento)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
+                    className="botao-excluir"
+                    onClick={() => excluirAgendamento(agendamento.id)}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </section>
 
       {/* GERENCIAMENTO DE CLIENTES */}
