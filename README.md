@@ -1,384 +1,775 @@
-# 📸 Portfólio de Fotografia
+**# 📸 Portfólio de Fotografia**
+
+
 
 Sistema web desenvolvido para gerenciamento e apresentação de um portfólio fotográfico.
 
+
+
 O projeto foi desenvolvido como atividade acadêmica, utilizando uma arquitetura composta por Front-end, Back-end e banco de dados PostgreSQL.
 
-## 🎯 Objetivo
+
+
+**## 🎯 Objetivo**
+
+
 
 Criar uma aplicação web que permita cadastrar, visualizar, editar e excluir fotografias de um portfólio, organizar imagens por categorias, gerenciar clientes e controlar agendamentos de serviços fotográficos.
 
-O projeto está sendo desenvolvido de forma incremental, com funcionalidades implementadas e apresentadas em entregas.
 
-## 🛠️ Tecnologias utilizadas
 
-### Front-end
-- React
-- Vite
-- JavaScript
-- HTML
-- CSS
+O projeto foi desenvolvido de forma incremental, com quatro entregas de funcionalidades implementadas, testadas e apresentadas.
 
-### Back-end
-- Node.js
-- Express
-- Multer
-- CORS
-- Dotenv
 
-### Banco de dados
-- PostgreSQL
 
-### Controle de versão
-- Git
-- GitHub
+**## 🛠️ Tecnologias utilizadas**
 
----
 
-## 📸 Entrega 1 — CRUD de Fotografias
 
-**Status: Concluída ✅**
+**### Front-end**
+
+\- React
+
+\- Vite
+
+\- JavaScript
+
+\- HTML
+
+\- CSS
+
+
+
+**### Back-end**
+
+\- Node.js
+
+\- Express
+
+\- Multer
+
+\- CORS
+
+\- Dotenv
+
+
+
+**### Banco de dados**
+
+\- PostgreSQL
+
+
+
+**### Controle de versão**
+
+\- Git
+
+\- GitHub
+
+
+
+**---**
+
+
+
+**## 📸 Entrega 1 — CRUD de Fotografias**
+
+
+
+**\*\*Status: Concluída ✅\*\***
+
+
 
 A primeira entrega apresenta o módulo de gerenciamento de fotografias, com integração entre Front-end, Back-end e banco de dados PostgreSQL.
 
-### Funcionalidades
-- ✅ Cadastro de fotografias
-- ✅ Upload de imagens
-- ✅ Visualização das fotografias
-- ✅ Edição de fotografias
-- ✅ Alteração da imagem durante a edição
-- ✅ Exclusão de fotografias
-- ✅ Persistência dos dados no PostgreSQL
 
-### Vídeo de apresentação
 
-[Apresentação da Entrega 1 — YouTube](https://www.youtube.com/watch?v=ESrsMs0mQxE)
+**### Funcionalidades**
 
----
+\- ✅ Cadastro de fotografias
 
-## 🗂️ Entrega 2 — Gerenciamento de Categorias
+\- ✅ Upload de imagens
 
-**Status: Implementada e testada ✅**
+\- ✅ Visualização das fotografias
+
+\- ✅ Edição de fotografias
+
+\- ✅ Alteração da imagem durante a edição
+
+\- ✅ Exclusão de fotografias
+
+\- ✅ Persistência dos dados no PostgreSQL
+
+
+
+**### Vídeo de apresentação**
+
+
+
+[Apresentação da Entrega 1 — YouTube]\(https\://www\.youtube.com/watch?v=ESrsMs0mQxE)
+
+
+
+**---**
+
+
+
+**## 🗂️ Entrega 2 — Gerenciamento de Categorias**
+
+
+
+**\*\*Status: Implementada e testada ✅\*\***
+
+
 
 A segunda entrega amplia o sistema com o gerenciamento de categorias e sua integração com as fotografias.
 
-### Funcionalidades
-- ✅ Cadastro de categorias
-- ✅ Listagem de categorias
-- ✅ Edição de categorias
-- ✅ Exclusão de categorias
-- ✅ Validação para impedir a exclusão de categorias vinculadas a fotografias
-- ✅ Integração das categorias com o PostgreSQL
-- ✅ Seleção de categorias no cadastro de fotografias
-- ✅ Seleção e atualização da categoria durante a edição de fotografias
-- ✅ Utilização do identificador da categoria (`categoria_id`) no relacionamento com as fotografias
 
-### Testes realizados
-- ✅ Cadastro, edição e exclusão de categorias
-- ✅ Validação de categorias duplicadas
-- ✅ Bloqueio da exclusão de categorias vinculadas a fotografias
-- ✅ Cadastro e edição de fotografias com categorias
-- ✅ Verificação da persistência das alterações após atualizar a página
 
-### Vídeo de apresentação
+**### Funcionalidades**
 
-[Apresentação da Entrega 2 — Gerenciamento de Categorias](https://www.youtube.com/watch?v=e8FydD59qys)
+\- ✅ Cadastro de categorias
 
----
+\- ✅ Listagem de categorias
 
-## 👥 Entrega 3 — Gerenciamento de Clientes
+\- ✅ Edição de categorias
 
-**Status: Concluída e testada ✅**
+\- ✅ Exclusão de categorias
+
+\- ✅ Validação para impedir a exclusão de categorias vinculadas a fotografias
+
+\- ✅ Integração das categorias com o PostgreSQL
+
+\- ✅ Seleção de categorias no cadastro de fotografias
+
+\- ✅ Seleção e atualização da categoria durante a edição de fotografias
+
+\- ✅ Utilização do identificador da categoria (\`categoria_id\`) no relacionamento com as fotografias
+
+
+
+**### Testes realizados**
+
+\- ✅ Cadastro, edição e exclusão de categorias
+
+\- ✅ Validação de categorias duplicadas
+
+\- ✅ Bloqueio da exclusão de categorias vinculadas a fotografias
+
+\- ✅ Cadastro e edição de fotografias com categorias
+
+\- ✅ Verificação da persistência das alterações após atualizar a página
+
+
+
+**### Vídeo de apresentação**
+
+
+
+[Apresentação da Entrega 2 — Gerenciamento de Categorias]\(https\://www\.youtube.com/watch?v=e8FydD59qys)
+
+
+
+**---**
+
+
+
+**## 👥 Entrega 3 — Gerenciamento de Clientes**
+
+
+
+**\*\*Status: Concluída e testada ✅\*\***
+
+
 
 A terceira entrega implementa o módulo de gerenciamento de clientes, permitindo cadastrar, consultar, editar e excluir clientes, com integração entre Front-end, Back-end e banco de dados PostgreSQL.
 
-### Funcionalidades
-- ✅ Cadastro de clientes
-- ✅ Listagem de clientes cadastrados
-- ✅ Edição dos dados dos clientes
-- ✅ Exclusão de clientes
-- ✅ Validação do campo obrigatório de nome
-- ✅ Validação de e-mail duplicado
-- ✅ Integração com o banco de dados PostgreSQL
-- ✅ Persistência dos dados cadastrados e atualizados
-- ✅ Comunicação entre Front-end e Back-end por meio de API REST
 
-### Testes realizados
-- ✅ Cadastro de clientes
-- ✅ Listagem dos clientes cadastrados
-- ✅ Edição dos dados de clientes
-- ✅ Exclusão de clientes
-- ✅ Verificação do funcionamento das rotas da API
-- ✅ Tratamento de e-mail duplicado
-- ✅ Verificação da persistência dos dados no PostgreSQL
-- ✅ Testes de integração entre Front-end e Back-end
 
-### Vídeo de apresentação
+**### Funcionalidades**
 
-[Apresentação da Entrega 3 — YouTube](https://youtu.be/1HpJ71f_PYE)
+\- ✅ Cadastro de clientes
 
----
+\- ✅ Listagem de clientes cadastrados
 
-## 📅 Entrega 4 — Gerenciamento de Agendamentos
+\- ✅ Edição dos dados dos clientes
 
-**Status: Implementada e testada ✅**
+\- ✅ Exclusão de clientes
+
+\- ✅ Validação do campo obrigatório de nome
+
+\- ✅ Validação de e-mail duplicado
+
+\- ✅ Integração com o banco de dados PostgreSQL
+
+\- ✅ Persistência dos dados cadastrados e atualizados
+
+\- ✅ Comunicação entre Front-end e Back-end por meio de API REST
+
+
+
+**### Testes realizados**
+
+\- ✅ Cadastro de clientes
+
+\- ✅ Listagem dos clientes cadastrados
+
+\- ✅ Edição dos dados de clientes
+
+\- ✅ Exclusão de clientes
+
+\- ✅ Verificação do funcionamento das rotas da API
+
+\- ✅ Tratamento de e-mail duplicado
+
+\- ✅ Verificação da persistência dos dados no PostgreSQL
+
+\- ✅ Testes de integração entre Front-end e Back-end
+
+
+
+**### Vídeo de apresentação**
+
+
+
+[Apresentação da Entrega 3 — YouTube]\(https\://youtu.be/1HpJ71f_PYE)
+
+
+
+**---**
+
+
+
+**## 📅 Entrega 4 — Gerenciamento de Agendamentos**
+
+
+
+**\*\*Status: Implementada e testada ✅\*\***
+
+
 
 A quarta entrega implementa o módulo de gerenciamento de agendamentos, permitindo organizar os serviços fotográficos e acompanhar seus respectivos status.
 
+
+
 O módulo possui integração com o gerenciamento de clientes, permitindo selecionar clientes já cadastrados para associá-los aos agendamentos.
 
-### Funcionalidades
-- ✅ Cadastro de agendamentos
-- ✅ Listagem dos agendamentos cadastrados
-- ✅ Edição de agendamentos
-- ✅ Exclusão de agendamentos
-- ✅ Seleção de clientes cadastrados
-- ✅ Definição do tipo de serviço fotográfico
-- ✅ Definição da data do agendamento
-- ✅ Definição do horário
-- ✅ Informação do local do serviço
-- ✅ Campo para observações adicionais
-- ✅ Controle de status do agendamento
-- ✅ Status: Pendente, Confirmado e Concluído
-- ✅ Integração com o banco de dados PostgreSQL
-- ✅ Relacionamento entre agendamentos e clientes por meio de chave estrangeira
-- ✅ Comunicação entre Front-end e Back-end por API REST
 
-### Testes realizados
-- ✅ Cadastro de agendamentos
-- ✅ Listagem dos agendamentos cadastrados
-- ✅ Edição das informações dos agendamentos
-- ✅ Alteração dos status dos agendamentos
-- ✅ Exclusão de agendamentos
-- ✅ Seleção de clientes cadastrados
-- ✅ Verificação da persistência dos dados no PostgreSQL
 
----
+**### Funcionalidades**
 
-## 🗂️ Estrutura do projeto
+\- ✅ Cadastro de agendamentos
 
-```text
+\- ✅ Listagem dos agendamentos cadastrados
+
+\- ✅ Edição de agendamentos
+
+\- ✅ Exclusão de agendamentos
+
+\- ✅ Seleção de clientes cadastrados
+
+\- ✅ Definição do tipo de serviço fotográfico
+
+\- ✅ Definição da data do agendamento
+
+\- ✅ Definição do horário
+
+\- ✅ Informação do local do serviço
+
+\- ✅ Campo para observações adicionais
+
+\- ✅ Controle de status do agendamento
+
+\- ✅ Status: Pendente, Confirmado e Concluído
+
+\- ✅ Integração com o banco de dados PostgreSQL
+
+\- ✅ Relacionamento entre agendamentos e clientes por meio de chave estrangeira
+
+\- ✅ Comunicação entre Front-end e Back-end por API REST
+
+
+
+**### Testes realizados**
+
+\- ✅ Cadastro de agendamentos
+
+\- ✅ Listagem dos agendamentos cadastrados
+
+\- ✅ Edição das informações dos agendamentos
+
+\- ✅ Alteração dos status dos agendamentos
+
+\- ✅ Exclusão de agendamentos
+
+\- ✅ Seleção de clientes cadastrados
+
+\- ✅ Verificação da persistência dos dados no PostgreSQL
+
+
+
+**---**
+
+
+
+**## 🗂️ Estrutura do projeto**
+
+
+
+\`\`\`text
+
 portfolio-fotografo/
-├── backend/
-│   ├── uploads/
-│   ├── server.js
-│   ├── package.json
-│   └── ...
-├── frontend/
-│   ├── src/
-│   ├── package.json
-│   └── ...
-├── .gitignore
-└── README.md
-```
 
-## 🗄️ Banco de dados
+├── backend/
+
+│   ├── uploads/
+
+│   ├── server.js
+
+│   ├── package.json
+
+│   └── ...
+
+├── frontend/
+
+│   ├── src/
+
+│   ├── package.json
+
+│   └── ...
+
+├── .gitignore
+
+└── README.md
+
+\`\`\`
+
+
+
+**## 🗄️ Banco de dados**
+
+
 
 O projeto utiliza PostgreSQL.
 
-**Banco de dados:** `portfolio_fotografo`
 
-### Tabela de fotografias
+
+**\*\*Banco de dados:\*\*** \`portfolio_fotografo\`
+
+
+
+**### Tabela de fotografias**
+
+
 
 A tabela de fotografias armazena os dados e o endereço das imagens cadastradas.
 
-Campos principais:
 
-- `id`: identificador da fotografia
-- `titulo`: título da fotografia
-- `descricao`: descrição da fotografia
-- `imagem_url`: endereço da imagem
-- `categoria`: campo de texto legado mantido no banco
-- `categoria_id`: identificador da categoria relacionada
-- `data_criacao`: data de criação do registro
-
-### Tabela de categorias
-
-A tabela `categorias` armazena as categorias disponíveis no portfólio.
 
 Campos principais:
 
-- `id`: identificador da categoria
-- `nome`: nome da categoria, com restrição de unicidade
-- `data_criacao`: data de criação do registro
 
-### Tabela de clientes
 
-A tabela `clientes` armazena os dados dos clientes cadastrados no sistema.
+\- \`id\`: identificador da fotografia
+
+\- \`titulo\`: título da fotografia
+
+\- \`descricao\`: descrição da fotografia
+
+\- \`imagem_url\`: endereço da imagem
+
+\- \`categoria\`: campo de texto legado mantido no banco
+
+\- \`categoria_id\`: identificador da categoria relacionada
+
+\- \`data_criacao\`: data de criação do registro
+
+
+
+**### Tabela de categorias**
+
+
+
+A tabela \`categorias\` armazena as categorias disponíveis no portfólio.
+
+
 
 Campos principais:
 
-- `id`: identificador do cliente
-- `nome`: nome do cliente
-- `email`: endereço de e-mail, com restrição de unicidade
-- `telefone`: telefone do cliente
-- `data_cadastro`: data de cadastro do cliente
 
-### Tabela de agendamentos
 
-A tabela `agendamentos` armazena os compromissos e serviços fotográficos agendados.
+\- \`id\`: identificador da categoria
+
+\- \`nome\`: nome da categoria, com restrição de unicidade
+
+\- \`data_criacao\`: data de criação do registro
+
+
+
+**### Tabela de clientes**
+
+
+
+A tabela \`clientes\` armazena os dados dos clientes cadastrados no sistema.
+
+
 
 Campos principais:
 
-- `id`: identificador do agendamento
-- `cliente_id`: identificador do cliente relacionado
-- `tipo_servico`: tipo de serviço fotográfico
-- `data_agendamento`: data do agendamento
-- `horario`: horário do serviço
-- `local`: local onde será realizado o serviço
-- `observacoes`: informações adicionais
-- `status`: situação do agendamento
-- `data_criacao`: data de criação do registro
 
-O campo `cliente_id` estabelece um relacionamento por chave estrangeira com a tabela `clientes`.
 
-Os status permitidos no banco de dados são: `Pendente`, `Confirmado` e `Concluido`.
+\- \`id\`: identificador do cliente
 
----
+\- \`nome\`: nome do cliente
 
-## ⚙️ Como executar o projeto
+\- \`email\`: endereço de e-mail, com restrição de unicidade
 
-### 1. Pré-requisitos
+\- \`telefone\`: telefone do cliente
+
+\- \`data_cadastro\`: data de cadastro do cliente
+
+
+
+**### Tabela de agendamentos**
+
+
+
+A tabela \`agendamentos\` armazena os compromissos e serviços fotográficos agendados.
+
+
+
+Campos principais:
+
+
+
+\- \`id\`: identificador do agendamento
+
+\- \`cliente_id\`: identificador do cliente relacionado
+
+\- \`tipo_servico\`: tipo de serviço fotográfico
+
+\- \`data_agendamento\`: data do agendamento
+
+\- \`horario\`: horário do serviço
+
+\- \`local\`: local onde será realizado o serviço
+
+\- \`observacoes\`: informações adicionais
+
+\- \`status\`: situação do agendamento
+
+\- \`data_criacao\`: data de criação do registro
+
+
+
+O campo \`cliente_id\` estabelece um relacionamento por chave estrangeira com a tabela \`clientes\`.
+
+
+
+Os status permitidos no banco de dados são: \`Pendente\`, \`Confirmado\` e \`Concluido\`.
+
+
+
+**---**
+
+
+
+**## ⚙️ Como executar o projeto**
+
+
+
+**### 1. Pré-requisitos**
+
+
 
 É necessário ter instalado:
 
-- Node.js
-- npm
-- PostgreSQL
-- Git
 
-### 2. Configuração do banco de dados
 
-Crie o banco de dados `portfolio_fotografo` no PostgreSQL e configure as credenciais de acesso utilizadas pelo Back-end.
+\- Node.js
+
+\- npm
+
+\- PostgreSQL
+
+\- Git
+
+
+
+**### 2. Configuração do banco de dados**
+
+
+
+Crie o banco de dados \`portfolio_fotografo\` no PostgreSQL e configure as credenciais de acesso utilizadas pelo Back-end.
+
+
 
 As tabelas e os relacionamentos devem estar configurados conforme a estrutura utilizada no projeto.
 
-### 3. Configuração do Back-end
+
+
+**### 3. Configuração do Back-end**
+
+
 
 Entre na pasta do Back-end:
 
-```bash
+
+
+\`\`\`bash
+
 cd backend
-```
+
+\`\`\`
+
+
 
 Instale as dependências:
 
-```bash
-npm install
-```
 
-Crie o arquivo `.env` dentro da pasta `backend`, com as configurações necessárias para a conexão com o PostgreSQL.
+
+\`\`\`bash
+
+npm install
+
+\`\`\`
+
+
+
+Crie o arquivo \`.env\` dentro da pasta \`backend\`, com as configurações necessárias para a conexão com o PostgreSQL.
+
+
 
 Execute o servidor:
 
-```bash
+
+
+\`\`\`bash
+
 node server.js
-```
+
+\`\`\`
+
+
 
 O Back-end será executado em:
 
-http://localhost:3000
 
-### 4. Configuração do Front-end
+
+http\://localhost:3000
+
+
+
+**### 4. Configuração do Front-end**
+
+
 
 Abra outro terminal e entre na pasta do Front-end:
 
-```bash
+
+
+\`\`\`bash
+
 cd frontend
-```
+
+\`\`\`
+
+
 
 Instale as dependências:
 
-```bash
+
+
+\`\`\`bash
+
 npm install
-```
+
+\`\`\`
+
+
 
 Execute o projeto:
 
-```bash
+
+
+\`\`\`bash
+
 npm run dev
-```
+
+\`\`\`
+
+
 
 O Front-end será disponibilizado pelo Vite, normalmente em:
 
-http://localhost:5173
 
----
 
-## 🔗 API REST
+http\://localhost:5173
+
+
+
+**---**
+
+
+
+**## 🔗 API REST**
+
+
 
 A aplicação utiliza uma API REST para comunicação entre o Front-end e o Back-end.
 
-### Fotografias
 
-| Método | Endpoint | Operação |
-|---|---|---|
-| GET | `/api/fotografias` | Lista fotografias |
-| GET | `/api/fotografias/:id` | Busca uma fotografia por ID |
-| POST | `/api/fotografias` | Cadastra uma fotografia |
-| PUT | `/api/fotografias/:id` | Atualiza uma fotografia |
-| DELETE | `/api/fotografias/:id` | Exclui uma fotografia |
 
-### Categorias
+**### Fotografias**
 
-| Método | Endpoint | Operação |
-|---|---|---|
-| GET | `/api/categorias` | Lista categorias |
-| POST | `/api/categorias` | Cadastra uma categoria |
-| PUT | `/api/categorias/:id` | Atualiza uma categoria |
-| DELETE | `/api/categorias/:id` | Exclui uma categoria, desde que não esteja vinculada a fotografias |
 
-### Clientes
 
-| Método | Endpoint | Operação |
-|---|---|---|
-| GET | `/api/clientes` | Lista clientes |
-| GET | `/api/clientes/:id` | Busca um cliente por ID |
-| POST | `/api/clientes` | Cadastra um cliente |
-| PUT | `/api/clientes/:id` | Atualiza os dados de um cliente |
-| DELETE | `/api/clientes/:id` | Exclui um cliente |
+\| Método | Endpoint | Operação |
 
-### Agendamentos
+\|---|---|---|
 
-| Método | Endpoint | Operação |
-|---|---|---|
-| GET | `/api/agendamentos` | Lista agendamentos |
-| GET | `/api/agendamentos/:id` | Busca um agendamento por ID |
-| POST | `/api/agendamentos` | Cadastra um agendamento |
-| PUT | `/api/agendamentos/:id` | Atualiza um agendamento |
-| DELETE | `/api/agendamentos/:id` | Exclui um agendamento |
+\| GET | \`/api/fotografias\` | Lista fotografias |
 
----
+\| GET | \`/api/fotografias/:id\` | Busca uma fotografia por ID |
 
-## 👥 Participantes
+\| POST | \`/api/fotografias\` | Cadastra uma fotografia |
 
-- Danilo A. O. Silva
+\| PUT | \`/api/fotografias/:id\` | Atualiza uma fotografia |
 
-## 📋 Board do projeto
+\| DELETE | \`/api/fotografias/:id\` | Exclui uma fotografia |
 
-[Portfólio de Fotografia — Entregas](https://github.com/users/DaniloAOSilva/projects/1/views/1)
 
-## 💻 Repositório GitHub
 
-[Portfólio de Fotografia — Código-fonte](https://github.com/DaniloAOSilva/portfolio-fotografo)
+**### Categorias**
 
-## 🚀 Deploy
+
+
+\| Método | Endpoint | Operação |
+
+\|---|---|---|
+
+\| GET | \`/api/categorias\` | Lista categorias |
+
+\| POST | \`/api/categorias\` | Cadastra uma categoria |
+
+\| PUT | \`/api/categorias/:id\` | Atualiza uma categoria |
+
+\| DELETE | \`/api/categorias/:id\` | Exclui uma categoria, desde que não esteja vinculada a fotografias |
+
+
+
+**### Clientes**
+
+
+
+\| Método | Endpoint | Operação |
+
+\|---|---|---|
+
+\| GET | \`/api/clientes\` | Lista clientes |
+
+\| GET | \`/api/clientes/:id\` | Busca um cliente por ID |
+
+\| POST | \`/api/clientes\` | Cadastra um cliente |
+
+\| PUT | \`/api/clientes/:id\` | Atualiza os dados de um cliente |
+
+\| DELETE | \`/api/clientes/:id\` | Exclui um cliente |
+
+
+
+**### Agendamentos**
+
+
+
+\| Método | Endpoint | Operação |
+
+\|---|---|---|
+
+\| GET | \`/api/agendamentos\` | Lista agendamentos |
+
+\| GET | \`/api/agendamentos/:id\` | Busca um agendamento por ID |
+
+\| POST | \`/api/agendamentos\` | Cadastra um agendamento |
+
+\| PUT | \`/api/agendamentos/:id\` | Atualiza um agendamento |
+
+\| DELETE | \`/api/agendamentos/:id\` | Exclui um agendamento |
+
+
+
+**---**
+
+
+
+**## 👥 Participantes**
+
+
+
+\- Danilo A. O. Silva
+
+
+
+**## 📋 Board do projeto**
+
+
+
+[Portfólio de Fotografia — Entregas]\(https\://github.com/users/DaniloAOSilva/projects/1/views/1)
+
+
+
+**## 💻 Repositório GitHub**
+
+
+
+[Portfólio de Fotografia — Código-fonte]\(https\://github.com/DaniloAOSilva/portfolio-fotografo)
+
+
+
+**## 🚀 Deploy**
+
+
 
 O projeto ainda não possui um endereço de publicação informado nesta documentação.
 
-**Link do deploy:** a adicionar após a publicação.
 
----
 
-## 📌 Status geral do projeto
+**\*\*Link do deploy:\*\*** a adicionar após a publicação.
 
-| Entrega | Funcionalidade | Situação |
-|---|---|---|
-| Entrega 1 | CRUD de Fotografias | Concluída ✅ |
-| Entrega 2 | Gerenciamento de Categorias | Concluída ✅ |
-| Entrega 3 | Gerenciamento de Clientes | Concluída ✅ |
-| Entrega 4 | Gerenciamento de Agendamentos | Concluída ✅ |
+
+
+**---**
+
+
+
+**## 📌 Status geral do projeto**
+
+
+
+\| Entrega | Funcionalidade | Situação |
+
+\|---|---|---|
+
+\| Entrega 1 | CRUD de Fotografias | Concluída ✅ |
+
+\| Entrega 2 | Gerenciamento de Categorias | Concluída ✅ |
+
+\| Entrega 3 | Gerenciamento de Clientes | Concluída ✅ |
+
+\| Entrega 4 | Gerenciamento de Agendamentos | Concluída ✅ |
+
+
 
 O projeto possui quatro módulos implementados, integrados ao banco de dados PostgreSQL e desenvolvidos com comunicação entre Front-end e Back-end por meio de API REST.
 
-**Próximas etapas:** evolução do sistema, melhorias de interface, testes adicionais e preparação das próximas funcionalidades.
+
+
+**## 🎥 Vídeo de apresentação final**
+
+Apresentação geral do sistema Portfolio de Fotografia, demonstrando as quatro entregas concluídas: gerenciamento de fotografias, categorias, clientes e agendamentos.
+
+[Assistir ao vídeo de apresentação final](https://youtu.be/ibGyUygpvX4)
+
+---
+
+O projeto acadêmico foi concluído com quatro módulos implementados e integrados ao banco de dados PostgreSQL, utilizando comunicação entre Front-end e Back-end por meio de API REST.
