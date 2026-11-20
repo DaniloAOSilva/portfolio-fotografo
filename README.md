@@ -6,7 +6,7 @@ O projeto foi desenvolvido como atividade acadêmica, utilizando uma arquitetura
 
 ## 🎯 Objetivo
 
-Criar uma aplicação web que permita cadastrar, visualizar, editar e excluir fotografias de um portfólio, além de organizar as imagens por categorias e gerenciar clientes.
+Criar uma aplicação web que permita cadastrar, visualizar, editar e excluir fotografias de um portfólio, organizar imagens por categorias, gerenciar clientes e controlar agendamentos de serviços fotográficos.
 
 O projeto está sendo desenvolvido de forma incremental, com funcionalidades implementadas e apresentadas em entregas.
 
@@ -33,6 +33,8 @@ O projeto está sendo desenvolvido de forma incremental, com funcionalidades imp
 - Git
 - GitHub
 
+---
+
 ## 📸 Entrega 1 — CRUD de Fotografias
 
 **Status: Concluída ✅**
@@ -51,6 +53,8 @@ A primeira entrega apresenta o módulo de gerenciamento de fotografias, com inte
 ### Vídeo de apresentação
 
 [Apresentação da Entrega 1 — YouTube](https://www.youtube.com/watch?v=ESrsMs0mQxE)
+
+---
 
 ## 🗂️ Entrega 2 — Gerenciamento de Categorias
 
@@ -79,6 +83,8 @@ A segunda entrega amplia o sistema com o gerenciamento de categorias e sua integ
 ### Vídeo de apresentação
 
 [Apresentação da Entrega 2 — Gerenciamento de Categorias](https://www.youtube.com/watch?v=e8FydD59qys)
+
+---
 
 ## 👥 Entrega 3 — Gerenciamento de Clientes
 
@@ -109,7 +115,45 @@ A terceira entrega implementa o módulo de gerenciamento de clientes, permitindo
 
 ### Vídeo de apresentação
 
-https://www.youtube.com/watch?v=1HpJ71f_PYE
+[Apresentação da Entrega 3 — YouTube](https://youtu.be/1HpJ71f_PYE)
+
+---
+
+## 📅 Entrega 4 — Gerenciamento de Agendamentos
+
+**Status: Implementada e testada ✅**
+
+A quarta entrega implementa o módulo de gerenciamento de agendamentos, permitindo organizar os serviços fotográficos e acompanhar seus respectivos status.
+
+O módulo possui integração com o gerenciamento de clientes, permitindo selecionar clientes já cadastrados para associá-los aos agendamentos.
+
+### Funcionalidades
+- ✅ Cadastro de agendamentos
+- ✅ Listagem dos agendamentos cadastrados
+- ✅ Edição de agendamentos
+- ✅ Exclusão de agendamentos
+- ✅ Seleção de clientes cadastrados
+- ✅ Definição do tipo de serviço fotográfico
+- ✅ Definição da data do agendamento
+- ✅ Definição do horário
+- ✅ Informação do local do serviço
+- ✅ Campo para observações adicionais
+- ✅ Controle de status do agendamento
+- ✅ Status: Pendente, Confirmado e Concluído
+- ✅ Integração com o banco de dados PostgreSQL
+- ✅ Relacionamento entre agendamentos e clientes por meio de chave estrangeira
+- ✅ Comunicação entre Front-end e Back-end por API REST
+
+### Testes realizados
+- ✅ Cadastro de agendamentos
+- ✅ Listagem dos agendamentos cadastrados
+- ✅ Edição das informações dos agendamentos
+- ✅ Alteração dos status dos agendamentos
+- ✅ Exclusão de agendamentos
+- ✅ Seleção de clientes cadastrados
+- ✅ Verificação da persistência dos dados no PostgreSQL
+
+---
 
 ## 🗂️ Estrutura do projeto
 
@@ -169,6 +213,28 @@ Campos principais:
 - `email`: endereço de e-mail, com restrição de unicidade
 - `telefone`: telefone do cliente
 - `data_cadastro`: data de cadastro do cliente
+
+### Tabela de agendamentos
+
+A tabela `agendamentos` armazena os compromissos e serviços fotográficos agendados.
+
+Campos principais:
+
+- `id`: identificador do agendamento
+- `cliente_id`: identificador do cliente relacionado
+- `tipo_servico`: tipo de serviço fotográfico
+- `data_agendamento`: data do agendamento
+- `horario`: horário do serviço
+- `local`: local onde será realizado o serviço
+- `observacoes`: informações adicionais
+- `status`: situação do agendamento
+- `data_criacao`: data de criação do registro
+
+O campo `cliente_id` estabelece um relacionamento por chave estrangeira com a tabela `clientes`.
+
+Os status permitidos no banco de dados são: `Pendente`, `Confirmado` e `Concluido`.
+
+---
 
 ## ⚙️ Como executar o projeto
 
@@ -237,6 +303,8 @@ O Front-end será disponibilizado pelo Vite, normalmente em:
 
 http://localhost:5173
 
+---
+
 ## 🔗 API REST
 
 A aplicação utiliza uma API REST para comunicação entre o Front-end e o Back-end.
@@ -270,6 +338,18 @@ A aplicação utiliza uma API REST para comunicação entre o Front-end e o Back
 | PUT | `/api/clientes/:id` | Atualiza os dados de um cliente |
 | DELETE | `/api/clientes/:id` | Exclui um cliente |
 
+### Agendamentos
+
+| Método | Endpoint | Operação |
+|---|---|---|
+| GET | `/api/agendamentos` | Lista agendamentos |
+| GET | `/api/agendamentos/:id` | Busca um agendamento por ID |
+| POST | `/api/agendamentos` | Cadastra um agendamento |
+| PUT | `/api/agendamentos/:id` | Atualiza um agendamento |
+| DELETE | `/api/agendamentos/:id` | Exclui um agendamento |
+
+---
+
 ## 👥 Participantes
 
 - Danilo A. O. Silva
@@ -288,28 +368,17 @@ O projeto ainda não possui um endereço de publicação informado nesta documen
 
 **Link do deploy:** a adicionar após a publicação.
 
-## 📌 Status do projeto
+---
 
-### Entrega 1 — CRUD de Fotografias
+## 📌 Status geral do projeto
 
-**Concluída ✅**
+| Entrega | Funcionalidade | Situação |
+|---|---|---|
+| Entrega 1 | CRUD de Fotografias | Concluída ✅ |
+| Entrega 2 | Gerenciamento de Categorias | Concluída ✅ |
+| Entrega 3 | Gerenciamento de Clientes | Concluída ✅ |
+| Entrega 4 | Gerenciamento de Agendamentos | Concluída ✅ |
 
-CRUD de fotografias desenvolvido, testado e integrado ao PostgreSQL.
+O projeto possui quatro módulos implementados, integrados ao banco de dados PostgreSQL e desenvolvidos com comunicação entre Front-end e Back-end por meio de API REST.
 
-### Entrega 2 — Gerenciamento de Categorias
-
-**Implementada e testada ✅**
-
-Gerenciamento de categorias integrado ao PostgreSQL, com associação entre categorias e fotografias.
-
-### Entrega 3 — Gerenciamento de Clientes
-
-**Concluída e testada ✅**
-
-Gerenciamento de clientes implementado, com cadastro, listagem, edição e exclusão integrados ao PostgreSQL.
-
-### Entrega 4 — Agendamentos
-
-**Planejada ⏳**
-
-Próxima funcionalidade prevista: gerenciamento de agendamentos.
+**Próximas etapas:** evolução do sistema, melhorias de interface, testes adicionais e preparação das próximas funcionalidades.
